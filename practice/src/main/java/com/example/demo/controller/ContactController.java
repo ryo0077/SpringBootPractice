@@ -13,18 +13,6 @@ public class ContactController {
     @PostMapping("/contact")
     public ModelAndView contact(@ModelAttribute ContactData contactData, ModelAndView mv) {
     	
-    	
-//            @RequestParam("lastName") String lastName,
-//            @RequestParam("firstName") String firstName,
-//            @RequestParam("email") String email,
-//            @RequestParam("phone") String phone,
-//            @RequestParam("zipCode") String zipCode,
-//            @RequestParam("address") String address,
-//            @RequestParam("buildingName") String buildingName,
-//            @RequestParam("contactType") String contactType,
-//            @RequestParam("body") String body,
-//            ModelAndView mv) {
-
         mv.setViewName("confirmation");
 
         mv.addObject("lastName", contactData.getLastName());
