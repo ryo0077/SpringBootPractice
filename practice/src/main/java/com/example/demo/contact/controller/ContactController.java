@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.contact.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.form.ContactForm;
-import com.example.demo.service.ContactService;
+import com.example.demo.contact.form.ContactForm;
+import com.example.demo.contact.service.ContactService;
 
 @Controller
 public class ContactController {
@@ -25,14 +25,14 @@ public class ContactController {
     public String contact(Model model) {
         model.addAttribute("contactForm", new ContactForm());
 
-        return "contact";
+        return "contact/contact";
     }
 
     @PostMapping("/contact")
     public String contact(@Validated @ModelAttribute("contactForm") ContactForm contactForm, BindingResult errorResult, HttpServletRequest request) {
 
         if (errorResult.hasErrors()) {
-          return "contact";
+          return "contact/contact";
         }
 
         HttpSession session = request.getSession();
@@ -47,7 +47,7 @@ public class ContactController {
 
         ContactForm contactForm = (ContactForm) session.getAttribute("contactForm");
         model.addAttribute("contactForm", contactForm);
-        return "confirmation";
+        return "contact/confirmation";
     }
 
     @PostMapping("/contact/register")
@@ -74,6 +74,6 @@ public class ContactController {
 
         session.invalidate();
 
-        return "completion";
+        return "contact/completion";
     }
 }
