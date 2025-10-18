@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>お問い合わせ一覧</title>
+<!--  <style>-->
+<!--    body { font-family: system-ui, sans-serif; }-->
+<!--    table { border-collapse: collapse; width: 100%; }-->
+<!--    th, td { border: 1px solid #ddd; padding: 8px; }-->
+<!--    th { background: #f6f6f6; text-align: left; }-->
+<!--  </style>-->
+</head>
+<body>
+<h1>お問い合わせ一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>お問い合わせID</th>
+      <th>姓</th>
+      <th>名</th>
+      <th>お問い合わせ種別</th>
+      <th>作成日時</th>
+      <th>更新日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="c : ${contacts}">
+      <td th:text="${c.id}">1</td>
+      <td th:text="${c.lastName}">山田</td>
+      <td th:text="${c.firstName}">太郎</td>
+      <td th:text="${c.contactType}">お問い合わせ</td>
+      <td th:text="${c.createdAt} != null ? ${#temporals.format(c.createdAt,'yyyy/MM/dd HH:mm')} : '-'">-</td>
+      <td th:text="${c.updatedAt} != null ? ${#temporals.format(c.updatedAt,'yyyy/MM/dd HH:mm')} : '-'">-</td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(contacts)}">
+      <td colspan="6">データがありません。</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
