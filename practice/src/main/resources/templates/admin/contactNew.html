@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>お問い合わせ新規作成</title>
+</head>
+<body>
+	<h1>お問い合わせ新規作成</h1>
+	<form th:action="@{/admin/contacts/new}" th:object="${form}" method="post">
+	  姓: <input type="text" th:field="*{lastName}"><br>
+	  名: <input type="text" th:field="*{firstName}"><br>
+	  メール: <input type="email" th:field="*{email}"><br>
+	  電話番号: <input type="text" th:field="*{phone}"><br>
+	  郵便番号: <input type="text" th:field="*{zipCode}"><br>
+	  住所: <input type="text" th:field="*{address}"><br>
+	  建物名: <input type="text" th:field="*{buildingName}"><br>
+	  お問い合わせ種別: <input type="text" th:field="*{contactType}"><br>
+	  内容: <textarea th:field="*{body}"></textarea><br>
+	  <button type="submit">登録</button>
+	</form>
+
+
+</body>
+</html>
