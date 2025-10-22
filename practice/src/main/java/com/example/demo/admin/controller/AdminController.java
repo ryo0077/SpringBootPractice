@@ -1,7 +1,10 @@
 package com.example.demo.admin.controller;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,16 +50,24 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public String create(@ModelAttribute("form") ContactForm form) {
+    public String create(@ModelAttribute("form") @Valid ContactForm form, BindingResult result, Model model) {
+    	if (result.hasErrors()) {
+    		return "admin/contactNew";
+    	}
         contactService.saveContact(form);
         return "redirect:/admin/contacts";
     }
 
     
     @PostMapping("/{id}/edit")
-    public String updateContact(@PathVariable Long id, @ModelAttribute("form") ContactForm form) {
-    	contactService.update(id,form);
-    	return "redirect:/admin/contacts/" + id;
+    public String updateContact(@PathVariable Long id, @ModelAttribute("form") @Valid ContactForm form, 
+    		BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("contactId", id);
+            return "admin/contactEdit";
+        }
+        contactService.update(id, form);
+        return "redirect:/admin/contacts/" + id;
     }
     
     @PostMapping("/{id}/delete")

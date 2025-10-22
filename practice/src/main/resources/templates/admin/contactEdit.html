@@ -7,18 +7,25 @@
 <body>
 	<h1>お問い合わせ編集</h1>
 		
-	<form th:action="@{/admin/contacts/{id}/edit(id=${contactId})}" method="post">
+	<form th:action="@{/admin/contacts/{id}/edit(id=${contactId})}" th:object="${form}" method="post">
 
-		    姓: <input type="text" name="lastName" th:value="${form.lastName}" /><br>
-		    名: <input type="text" name="firstName" th:value="${form.firstName}" /><br>
-		    メール: <input type="email" name="email" th:value="${form.email}" /><br>
-		    電話番号: <input type="text" name="phone" th:value="${form.phone}" /><br>
-		    郵便番号: <input type="text" name="zipCode" th:value="${form.zipCode}" /><br>
-		    住所: <input type="text" name="address" th:value="${form.address}" /><br>
-		    建物名: <input type="text" name="buildingName" th:value="${form.buildingName}" /><br>
-		    お問い合わせ種別: <input type="text" name="contactType" th:value="${form.contactType}" /><br>
-		    内容:<textarea name="body" th:text="${form.body}"></textarea><br>
-		    <button type="submit">更新</button>
+		    姓: <input type="text" th:field="*{lastName}"><br>
+			<div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+
+			名：<input type="text" th:field="*{firstName}"><br>
+			<div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+
+			メール：<input type="email" th:field="*{email}"><br>
+			<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+			
+			電話番号：<input type="text" th:field="*{phone}"><br>
+		    郵便番号：<input type="text" th:field="*{zipCode}"><br>
+			住所：<input type="text" th:field="*{address}"><br>
+		    建物名：<input type="text" th:field="*{buildingName}"><br>
+		    お問い合わせ種別：<input type="text" th:field="*{contactType}"><br>
+			内容：<textarea th:field="*{body}"></textarea><br>
+
+			<button type="submit">更新</button>
 	</form>
 
 </body>

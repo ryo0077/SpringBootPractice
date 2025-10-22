@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>お問い合わせ新規作成</title>
@@ -14,10 +14,21 @@
 	  郵便番号: <input type="text" th:field="*{zipCode}"><br>
 	  住所: <input type="text" th:field="*{address}"><br>
 	  建物名: <input type="text" th:field="*{buildingName}"><br>
-	  お問い合わせ種別: <input type="text" th:field="*{contactType}"><br>
+	  お問い合わせ種別: 
+	  <select th:field="*{contactType}">
+		<option value="">選択してください</option>
+		<option value="INQUIRY">一般のお問い合わせ</option>
+		<option value="BUG">不具合・エラー報告</option>
+		<option value="REQUEST">機能追加のご要望</option>
+		<option value="OTHER">その他</option>
+	  </select><br>
+	  <div th:if="${#fields.hasErrors('contactType')}" th:errors="*{contactType}"></div>
 	  内容: <textarea th:field="*{body}"></textarea><br>
 	  <button type="submit">登録</button>
 	</form>
+	<br>
+	<a th:href="@{/admin/contacts}">一覧に戻る</a>
+
 
 
 </body>

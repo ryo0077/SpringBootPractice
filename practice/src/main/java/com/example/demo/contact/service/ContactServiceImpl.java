@@ -2,10 +2,10 @@ package com.example.demo.contact.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.contact.entity.Contact;
 import com.example.demo.contact.form.ContactForm;
@@ -29,16 +29,18 @@ public class ContactServiceImpl implements ContactService {
         return contactRepository.findAllByOrderByUpdatedAtDesc();
     }
     
-    @Transactional(readOnly = true)    
-    @Override
-    public Page<Contact> findPage(Pageable pageable) {
-    	return contactRepository.findAll(pageable);
-    }
+//   @Transactional(readOnly = true)    
+//    @Override 
+//    public Page<Contact> findPage(Pageable pageable) {
+//    	return contactRepository.findAll(pageable);
+//    }
     
     @Transactional(readOnly = true)
     @Override
     public Contact findById(Long id) {
-    	return contactRepository.findById(id).orElse(null);
+        return contactRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "該当するIDがありません"));
     }
     
     @Transactional
@@ -52,10 +54,11 @@ public class ContactServiceImpl implements ContactService {
     @Transactional
     @Override
     public void update(Long id, ContactForm form) {
-    	Contact c = contactRepository.findById(id).orElse(null);
-    	if (c == null) return;
-    	applyForm(c, form);
-    	contactRepository.save(c);
+        Contact c = contactRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "該当するIDがありません"));
+        applyForm(c, form);
+        contactRepository.save(c);
     }
     
     @Transactional
