@@ -29,11 +29,7 @@ public class ContactServiceImpl implements ContactService {
         return contactRepository.findAllByOrderByUpdatedAtDesc();
     }
     
-//   @Transactional(readOnly = true)    
-//    @Override 
-//    public Page<Contact> findPage(Pageable pageable) {
-//    	return contactRepository.findAll(pageable);
-//    }
+
     
     @Transactional(readOnly = true)
     @Override

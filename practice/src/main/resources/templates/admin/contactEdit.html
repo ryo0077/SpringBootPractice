@@ -3,27 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <title>お問い合わせ編集</title>
+<style>
+  .error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 4px;
+  }
+</style>
 </head>
 <body>
 	<h1>お問い合わせ編集</h1>
 		
-	<form th:action="@{/admin/contacts/{id}/edit(id=${contactId})}" th:object="${form}" method="post">
+	<form th:action="@{/admin/contacts/{id}/edit(id=${contactId})}"
+	      th:object="${form}" method="post">
 
-		    姓: <input type="text" th:field="*{lastName}"><br>
-			<div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
 
-			名：<input type="text" th:field="*{firstName}"><br>
-			<div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+		姓: <input type="text" th:field="*{lastName}"><br>
+			  <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error-message"></div>
 
-			メール：<input type="email" th:field="*{email}"><br>
-			<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-			
-			電話番号：<input type="text" th:field="*{phone}"><br>
-		    郵便番号：<input type="text" th:field="*{zipCode}"><br>
-			住所：<input type="text" th:field="*{address}"><br>
-		    建物名：<input type="text" th:field="*{buildingName}"><br>
-		    お問い合わせ種別：<input type="text" th:field="*{contactType}"><br>
-			内容：<textarea th:field="*{body}"></textarea><br>
+			  名: <input type="text" th:field="*{firstName}"><br>
+			  <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error-message"></div>
+
+			  メール: <input type="email" th:field="*{email}"><br>
+			  <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></div>
+
+			  電話番号: <input type="text" th:field="*{phone}"><br>
+			  <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error-message"></div>
+
+			  郵便番号: <input type="text" th:field="*{zipCode}"><br>
+			  <div th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}" class="error-message"></div>
+
+			  住所: <input type="text" th:field="*{address}"><br>
+			  <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error-message"></div>
+
+			  建物名: <input type="text" th:field="*{buildingName}"><br>
+			  <div th:if="${#fields.hasErrors('buildingName')}" th:errors="*{buildingName}" class="error-message"></div>
+
+			  お問い合わせ種別:
+			  <select th:field="*{contactType}">
+			    <option value="">選択してください</option>
+			    <option value="INQUIRY">一般のお問い合わせ</option>
+			    <option value="BUG">不具合のご報告</option>
+			    <option value="REQUEST">機能追加のご要望</option>
+			    <option value="OTHER">その他</option>
+			  </select>
+			  <div th:if="${#fields.hasErrors('contactType')}" th:errors="*{contactType}" class="error-message"></div><br>
+
+			  内容: <textarea th:field="*{body}"></textarea><br>
+			  <div th:if="${#fields.hasErrors('body')}" th:errors="*{body}" class="error-message"></div>
 
 			<button type="submit">更新</button>
 	</form>

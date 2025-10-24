@@ -31,13 +31,14 @@ public class ContactForm implements Serializable {
     @NotBlank(message = "住所は必須です")
     private String address;
 
+    @NotBlank(message = "建物名は必須です")
     private String buildingName;
 
     @NotBlank(message = "お問い合わせ種別を選択してください")
     private String contactType;
 
     @NotBlank(message = "お問い合わせ内容は必須です")
-    @Size(max = 1000, message = "お問い合わせ内容は1000文字以内で入力してください")
+    @Size(min = 10, max = 1000, message = "お問い合わせ内容は10文字以上、1000文字以内で入力してください")
     private String body;
 }
 
