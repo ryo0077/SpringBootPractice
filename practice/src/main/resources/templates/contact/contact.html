@@ -61,9 +61,11 @@
         <td>お問い合わせ種別</td>
         <td>
           <select th:field="*{contactType}">
-            <option th:value="services">サービスに関するお問い合わせ</option>
-            <option th:value="technicalQuestions">技術的なお問い合わせ</option>
-            <option th:value="others">その他</option>
+			<option value="">選択してください</option>
+		    <option value="INQUIRY">一般のお問い合わせ</option>
+		    <option value="BUG">不具合のご報告</option>
+			<option value="REQUEST">機能追加のご要望</option>
+		    <option value="OTHER">その他</option>
           </select>
           <span th:if="${#fields.hasErrors('contactType')}" th:errors="*{contactType}" style="color: red"></span>
         </td>

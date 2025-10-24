@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>お問い合わせ詳細</title>
+</head>
+<body>
+	<h1>お問い合わせ詳細</h1>
+	
+	<p>ID: [[${contact.id}]]</p>
+	<p>姓: [[${contact.lastName}]]</p>
+	<p>名: [[${contact.firstName}]]</p>
+	<p>メール: [[${contact.email}]]</p>
+	<p>電話番号: [[${contact.phone}]]</p>
+	<p>住所: [[${contact.address}]]</p>
+	<p>お問い合わせ種別: [[${contact.contactType}]]</p>
+	<p>内容: [[${contact.body}]]</p>
+	
+	<a th:href="@{/admin/contacts/{id}/edit(id=${contact.id})}">編集</a>
+	<form th:action="@{/admin/contacts/{id}/delete(id=${contact.id})}" method="post"
+		onsubmit="return confirm('削除しますか？')">
+		<button type="submit">削除</button>
+	</form>
+	<a th:href="@{/admin/contacts}">一覧へ戻る</a>
+
+</body>
+</html>

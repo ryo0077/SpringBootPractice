@@ -7,5 +7,9 @@ import com.example.demo.contact.form.ContactForm;
 
 public interface ContactService {
     void saveContact(ContactForm contactForm);
+    void update(Long id, ContactForm form);
+    void delete(Long id);
+    List<Contact> findAll();
     List<Contact> findAllOrderByUpdatedAtDesc();
+    Contact findById(Long id);
 }
