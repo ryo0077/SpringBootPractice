@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <title>お問い合わせ一覧</title>
-<!--  <style>-->
-<!--    body { font-family: system-ui, sans-serif; }-->
-<!--    table { border-collapse: collapse; width: 100%; }-->
-<!--    th, td { border: 1px solid #ddd; padding: 8px; }-->
-<!--    th { background: #f6f6f6; text-align: left; }-->
-<!--  </style>-->
 </head>
 <body>
 <h1>お問い合わせ一覧</h1>
+
+<p th:if="${warn}" th:text="${warn}" style="color:#c00"></p>
+<p th:if="${ok}"   th:text="${ok}"   style="color:#090"></p>
+
+<p>
+  <a th:href="@{/admin/contacts/new}">新規登録</a>
+</p>
 
 <table>
   <thead>
@@ -22,6 +23,7 @@
       <th>お問い合わせ種別</th>
       <th>作成日時</th>
       <th>更新日時</th>
+      <th>操作</th>
     </tr>
   </thead>
   <tbody>
@@ -30,11 +32,23 @@
       <td th:text="${c.lastName}">山田</td>
       <td th:text="${c.firstName}">太郎</td>
       <td th:text="${c.contactType}">お問い合わせ</td>
-      <td th:text="${c.createdAt} != null ? ${#temporals.format(c.createdAt,'yyyy/MM/dd HH:mm')} : '-'">-</td>
-      <td th:text="${c.updatedAt} != null ? ${#temporals.format(c.updatedAt,'yyyy/MM/dd HH:mm')} : '-'">-</td>
+      <td th:text="${c.createdAt != null ? #temporals.format(c.createdAt, 'yyyy/MM/dd HH:mm') : '-'}">-</td>
+      <td th:text="${c.updatedAt != null ? #temporals.format(c.updatedAt, 'yyyy/MM/dd HH:mm') : '-'}">-</td>
+      <td>
+        <a th:href="@{/admin/contacts/{id}(id=${c.id})}">詳細</a>
+        <a th:href="@{/admin/contacts/{id}/edit(id=${c.id})}">編集</a>
+        <form th:action="@{/admin/contacts/{id}/delete(id=${c.id})}"
+              method="post" style="display:inline"
+              onsubmit="return confirm('削除しますか？')">
+          <input type="hidden" th:if="${_csrf != null}"
+                 th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <button type="submit">削除</button>
+        </form>
+      </td>
     </tr>
+
     <tr th:if="${#lists.isEmpty(contacts)}">
-      <td colspan="6">データがありません。</td>
+      <td colspan="7">データがありません。</td>
     </tr>
   </tbody>
 </table>

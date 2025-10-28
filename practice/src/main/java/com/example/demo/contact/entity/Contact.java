@@ -53,9 +53,10 @@ public class Contact {
     private String body;
     
     @CreatedDate
-    @Column(updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name="updated_at", nullable=false)
     private LocalDateTime updatedAt;
 }
