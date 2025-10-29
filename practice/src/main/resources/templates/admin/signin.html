@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>管理者ログイン</title>
+<style>
+  body { font-family: sans-serif; margin: 40px; }
+  h1 { color: #333; }
+  label { display: block; margin-top: 10px; }
+  input { width: 300px; padding: 6px; margin-top: 4px; }
+  .error { color: red; font-size: 0.9em; }
+  .submit-btn { margin-top: 15px; }
+</style>
+</head>
+<body>
+<h1>管理者ログイン</h1>
+
+<form th:action="@{/admin/signin}" th:object="${form}" method="post">
+	<label>メールアドレス</label>
+	<input type="email" th:field="*{email}">
+	<div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+	
+	<label>パスワード</label>
+	<input type="password" th:field="*{password}">
+	<div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+	
+	<div class="error"
+	      th:if="${#fields.hasGlobalErrors()}"
+	      th:each="err : ${#fields.globalErrors()}"
+	      th:text="${err}"></div>
+
+    <div class="submit-btn">
+		<button type="submit">ログイン</button>
+	</div>
+</form>
+
+<p><a th:href="@{/admin/signup}">新規登録はこちら</a></p>
+	
+</body>
+</html>
