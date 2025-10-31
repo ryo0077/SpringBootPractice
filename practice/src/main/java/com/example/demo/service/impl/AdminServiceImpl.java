@@ -3,8 +3,7 @@ package com.example.demo.service.impl;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,11 +11,14 @@ import com.example.demo.entity.Admin;
 import com.example.demo.repository.AdminRepository;
 import com.example.demo.service.AdminService;
 
-@Service
-public class AdminServiceImpl implements AdminService {
+import lombok.RequiredArgsConstructor;
 
-    @Autowired
-    private AdminRepository adminRepository;
+@Service
+@RequiredArgsConstructor
+public class AdminServiceImpl implements AdminService {
+	
+	private final AdminRepository adminRepository;
+	private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
@@ -28,14 +30,14 @@ public class AdminServiceImpl implements AdminService {
         admin.setLastName(lastName);
         admin.setFirstName(firstName);
         admin.setEmail(email);
-        admin.setPassword(BCrypt.hashpw(rawPassword, BCrypt.gensalt()));
+        admin.setPassword(passwordEncoder.encode(rawPassword));
         return adminRepository.save(admin);
     }
 
     @Override
     public Optional<Admin> authenticate(String email, String rawPassword) {
         return adminRepository.findByEmail(email)
-                .filter(a -> BCrypt.checkpw(rawPassword, a.getPassword()));
+            .filter(a -> passwordEncoder.matches(rawPassword, a.getPassword()));
     }
 
     @Transactional
