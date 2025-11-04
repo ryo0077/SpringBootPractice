@@ -9,7 +9,7 @@ import com.example.demo.entity.Admin;
 
 @Repository
 
-public interface AdminRepository extends JpaRepository<Admin, Integer> {
+public interface AdminRepository extends JpaRepository<Admin, Long> {
 	
 	Optional<Admin> findByEmail(String email);
 	
