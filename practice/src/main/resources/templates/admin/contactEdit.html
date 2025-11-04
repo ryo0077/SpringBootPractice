@@ -12,6 +12,9 @@
 </style>
 </head>
 <body>
+	
+	<div th:replace="~{admin/layout/header :: adminHeader}"></div>
+
 	<h1>お問い合わせ編集</h1>
 		
 	<form th:action="@{/admin/contacts/{id}/edit(id=${contactId})}"

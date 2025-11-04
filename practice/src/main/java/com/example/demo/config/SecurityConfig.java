@@ -13,21 +13,23 @@ public class SecurityConfig {
         http
           .authorizeHttpRequests(auth -> auth
              
-              .requestMatchers("/admin/login", "/admin/signup", "/css/**", "/js/**", "/images/**").permitAll()
+              .requestMatchers("/admin/signin", "/admin/signup", "/css/**", "/js/**", "/images/**").permitAll()
               
               .requestMatchers("/admin/**").authenticated()
               .anyRequest().permitAll()
           )
           .formLogin(login -> login
-              .loginPage("/admin/login")           
-              .loginProcessingUrl("/admin/login")  
+              .loginPage("/admin/signin")           
+              .loginProcessingUrl("/admin/signin")  
               .defaultSuccessUrl("/admin/contacts", true)
-              .failureUrl("/admin/login?error")
+              .failureUrl("/admin/signin?error")
               .permitAll()
           )
           .logout(logout -> logout
               .logoutUrl("/admin/logout")
-              .logoutSuccessUrl("/admin/login?logout")
+              .logoutSuccessUrl("/admin/signin?logout")
+              .invalidateHttpSession(true)
+              .deleteCookies("JSESSIONID")
           );
 
         return http.build();

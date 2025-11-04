@@ -18,36 +18,51 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-public class AdminSignupController {
+public class AdminAuthController {
 
-    private final AdminService adminService;
+    private final AdminService adminService; 
 
+    
+    @GetMapping("/signin")
+    public String signinPage() {
+        return "admin/signin";    
+    }
+
+    
     @GetMapping("/signup")
-    public String showSignup(Model model) {
+    public String signupForm(Model model) {
         model.addAttribute("form", new AdminSignupForm());
         return "admin/signup";
     }
 
+    
     @PostMapping("/signup")
-    public String doSignup(@Valid @ModelAttribute("form") AdminSignupForm form,
-                           BindingResult bindingResult) {
+    public String doSignup(@ModelAttribute("form") @Valid AdminSignupForm form,
+                           BindingResult bindingResult,          
+                           Model model) {
+       
 
         if (!form.getPassword().equals(form.getPasswordConfirm())) {
             bindingResult.rejectValue("passwordConfirm", "mismatch", "パスワード（確認）が一致しません。");
         }
+
         if (bindingResult.hasErrors()) {
             return "admin/signup";
         }
 
         try {
-         
-            adminService.register(form.getLastName(), form.getFirstName(), form.getEmail(), form.getPassword());
-        } catch (IllegalArgumentException e) {
+            adminService.register(
+                form.getLastName(),
+                form.getFirstName(),
+                form.getEmail(),
+                form.getPassword()
+            );
+        } catch (IllegalArgumentException e) { 
             bindingResult.rejectValue("email", "duplicated", e.getMessage());
             return "admin/signup";
         }
 
-     
-        return "redirect:/admin/login";
+       
+        return "redirect:/admin/signin?registered";
     }
 }
